@@ -66,7 +66,7 @@ app.on('new_alert', (alertData) => {
   });
 });
 
-// Periodic alert generation (every 15 seconds)
+// Periodic alert generation (every 2 minutes)
 const db = require('./database');
 setInterval(() => {
   try {
@@ -90,7 +90,7 @@ setInterval(() => {
   } catch (err) {
     console.error('Failed to generate automatic alert:', err);
   }
-}, 15000);
+}, 120000);
 // -------------------------------------
 
 // Catch-all route to serve the SPA
