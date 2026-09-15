@@ -166,6 +166,7 @@ function setupEventListeners() {
     // Incidents Setup
     document.getElementById('btn-new-incident').addEventListener('click', openIncidentModal);
     document.getElementById('incident-form').addEventListener('submit', handleIncidentSubmit);
+    document.getElementById('btn-analyze-incident').addEventListener('click', analyzeIncident);
     
     // Filters
     document.getElementById('search-incidents').addEventListener('input', fetchIncidents);
@@ -305,6 +306,8 @@ function openIncidentModal(incident = null) {
     const form = document.getElementById('incident-form');
     form.reset();
     document.getElementById('existing-attachments').innerHTML = '';
+    document.getElementById('ai-triage-result').classList.add('hidden');
+    document.getElementById('ai-triage-result').innerHTML = '';
 
     if (incident && incident.id) {
         document.getElementById('incident-modal-title').textContent = 'Edit Incident';
@@ -338,6 +341,49 @@ function openIncidentModal(incident = null) {
     }
     
     modal.classList.remove('hidden');
+}
+
+async function analyzeIncident() {
+    const button = document.getElementById('btn-analyze-incident');
+    const result = document.getElementById('ai-triage-result');
+    button.disabled = true;
+    button.textContent = 'Analyzing...';
+
+    try {
+        const res = await fetch('/api/ai/triage', {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+                name: document.getElementById('inc-name').value,
+                type: document.getElementById('inc-type').value,
+                severity: document.getElementById('inc-severity').value,
+                notes: document.getElementById('inc-notes').value
+            })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Analysis failed');
+
+        result.innerHTML = `
+            <div class="ai-triage-summary">
+                <span>Suggested priority</span>
+                <strong class="badge severity-${data.suggestedPriority}">${data.suggestedPriority}</strong>
+                <span class="text-muted">${data.confidence} confidence</span>
+            </div>
+            <p><strong>Category:</strong> ${data.category}</p>
+            <p><strong>Why:</strong> ${data.explanation}</p>
+            <p><strong>Signals:</strong> ${data.factors.join('; ')}</p>
+            ${data.missingInformation.length ? `<p><strong>Consider adding:</strong> ${data.missingInformation.join('; ')}</p>` : ''}
+            <small class="text-muted">${data.disclaimer}</small>
+        `;
+        result.classList.remove('hidden');
+    } catch (err) {
+        result.textContent = err.message;
+        result.classList.remove('hidden');
+        showToast('AI analysis unavailable', 'error');
+    } finally {
+        button.disabled = false;
+        button.textContent = 'Analyze report';
+    }
 }
 
 async function handleIncidentSubmit(e) {

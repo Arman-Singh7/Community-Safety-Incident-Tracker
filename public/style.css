@@ -130,6 +130,36 @@ input:focus, select:focus, textarea:focus {
     box-shadow: var(--shadow);
 }
 
+.ai-triage-panel {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    background: var(--bg-base);
+}
+.ai-triage-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.ai-triage-header h4 { margin-bottom: 0.25rem; }
+.ai-triage-header p { color: var(--text-muted); font-size: 0.85rem; }
+.ai-triage-result {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+}
+.ai-triage-result p { margin-top: 0.45rem; }
+.ai-triage-summary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
 /* Views */
 .view {
     min-height: 100vh;

@@ -269,6 +269,16 @@
                     <label>Notes</label>
                     <textarea id="inc-notes" rows="4"></textarea>
                 </div>
+                <div class="ai-triage-panel">
+                    <div class="ai-triage-header">
+                        <div>
+                            <h4>AI-assisted triage</h4>
+                            <p>Get an explainable priority suggestion for analyst review.</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary" id="btn-analyze-incident">Analyze report</button>
+                    </div>
+                    <div id="ai-triage-result" class="ai-triage-result hidden" aria-live="polite"></div>
+                </div>
                 <div class="form-group">
                     <label>Attachments (Max 5, 500KB each)</label>
                     <input type="file" id="inc-attachments" multiple accept="image/*,audio/*,.pdf,.doc,.docx">

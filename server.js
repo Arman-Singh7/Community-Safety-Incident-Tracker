@@ -30,6 +30,7 @@ const messageRoutes = require('./routes/messages');
 const alertRoutes = require('./routes/alerts');
 const auditRoutes = require('./routes/audit');
 const exportRoutes = require('./routes/export');
+const triageRoutes = require('./routes/triage');
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -39,6 +40,7 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/audit', auditRoutes);
 app.use('/api/export', exportRoutes);
 app.use('/api/import', exportRoutes);
+app.use('/api/ai', triageRoutes);
 
 // --- Server-Sent Events (SSE) Setup ---
 let sseClients = [];

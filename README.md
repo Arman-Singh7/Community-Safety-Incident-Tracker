@@ -2,6 +2,8 @@
 
 A simple and practical neighborhood safety reporting system for residents, volunteers, and local admins to report, monitor, and manage local incidents.
 
+For the 1M1B AI for Sustainability Virtual Internship submission, see [PROJECT_SUBMISSION.md](PROJECT_SUBMISSION.md). The document distinguishes the working tracker from the proposed AI-assisted triage and retrieval workflow.
+
 ## Features
 - **User Authentication**: Simple login with roles (admin, analyst, viewer).
 - **Incident Management**: CRUD operations with role-based access control and file attachments.
